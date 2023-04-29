@@ -8,6 +8,8 @@ import decimal
 # Conversion api
 def conversion_api(request, currency1, currency2, amount):
     # handle not supported currency
+    currency1 = str(currency1).upper()
+    currency2 = str(currency2).upper()
     if not request.method == 'GET' or not currency1 in Currency or not currency2 in Currency:
         error_data = {
             'success': False,

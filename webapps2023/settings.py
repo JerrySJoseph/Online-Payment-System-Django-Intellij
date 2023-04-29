@@ -28,6 +28,8 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 SESSION_COOKIE_HTTPONLY =True
+
+SECURE_SSL_REDIRECT = True
 # Application definition
 
 INSTALLED_APPS = [
