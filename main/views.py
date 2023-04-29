@@ -1,6 +1,7 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth import logout as _logout
 from django.contrib.auth.decorators import login_required
+from utils.views.empty import empty_view
 # Create your views here.
 
 
@@ -23,3 +24,7 @@ def index(request):
 def logout(request):
     _logout(request)
     return redirect('login')
+
+
+def page_not_found_404(request):
+    return empty_view(request,'Page Not Found','The page you have requested not found. Please make sure you are in the correct URL.')
