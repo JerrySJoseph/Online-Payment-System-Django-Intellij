@@ -1,21 +1,25 @@
 from django.contrib.auth.decorators import login_required
-from django.shortcuts import render, HttpResponse
+from django.shortcuts import render
+
 from transaction.utils.transactions import get_distinct_transactions_by_id
-from .forms import EditProfileForm
 from utils.toast import ToastHttpResponse
 from utils.views.empty import empty_view
+from .forms import EditProfileForm
 
 
+# index page
 @login_required(login_url='login')
 def index(request):
     return render(request, 'account/index.html')
 
 
+# GET profile partial html
 @login_required(login_url='login')
 def get_profile_html(request):
     return render(request, 'account/partials/profile.html')
 
 
+# GET navbar dropdown partial html for logged in user
 @login_required(login_url='login')
 def nav_account_details(request):
     return render(request, 'account/partials/nav-account-details.html', {
@@ -23,6 +27,7 @@ def nav_account_details(request):
     })
 
 
+# GET recent transfers table
 @login_required(login_url='login')
 def get_recent_transfers(request):
     transfers = get_distinct_transactions_by_id(request.user.id)
@@ -35,6 +40,7 @@ def get_recent_transfers(request):
     return render(request, 'account/partials/recent-transfer-list.html', context)
 
 
+# GET edit profile form
 @login_required(login_url='login')
 def edit_profile(request):
     form = EditProfileForm(request.user)
@@ -51,7 +57,7 @@ def edit_profile(request):
     }
     return render(request, 'account/partials/edit-profile.html', context)
 
-
+# GET profile card html for logged in user
 @login_required(login_url='login')
 def profile_card(request):
     return render(request, 'account/partials/profile-card.html')

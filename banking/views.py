@@ -1,22 +1,22 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
-from .forms import RequestForm, SearchForm, SendDetailForm, RequestDetailForm
-from django.http import Http404
-from django.contrib.auth.decorators import login_required
-from .utils.transfers import create_transfer_request, transfer_money_by_id, get_transfer_requests_by_id, get_transfer_request_by_id, withdraw_transfer_request, approve_transfer_request as atr, deny_transfer_request as dtr
-from crispy_forms.templatetags.crispy_forms_filters import as_crispy_field
-from django.core.exceptions import ValidationError
-from .utils.search import get_user_with_id
-from django.urls import reverse_lazy
-from wallet.utils.exceptions.TransactionException import TransferException
 import json
+
+from django.contrib.auth.decorators import login_required
+from django.http import Http404
+from django.shortcuts import render, HttpResponse
 from utils.toast import ToastHttpResponse
+from wallet.utils.exceptions.TransactionException import TransferException
+from .forms import SearchForm, SendDetailForm, RequestDetailForm
+from .utils.search import get_user_with_id
+from .utils.transfers import create_transfer_request, transfer_money_by_id, get_transfer_requests_by_id, \
+    get_transfer_request_by_id, withdraw_transfer_request, approve_transfer_request as atr, deny_transfer_request as dtr
+
 
 @login_required(login_url='login')
 def transfer_request(request):
-
     if request.method == 'GET':
         return render(request, 'banking/layout/transfer-request.html')
     raise Http404()
+
 
 @login_required(login_url='login')
 def get_transfer_request_list(request):
@@ -35,6 +35,7 @@ def get_transfer_request_list(request):
         return render(request, 'banking/partials/transfer_request_list.html', context)
     return HttpResponse('No content')
 
+
 @login_required(login_url='login')
 def withdraw_confirmation_form(request):
     if request.method == 'GET':
@@ -43,6 +44,7 @@ def withdraw_confirmation_form(request):
         }
         return render(request, 'banking/partials/transfer_request_withdraw.html', context)
     return HttpResponse('No content')
+
 
 @login_required(login_url='login')
 def approve_tr_confirmation_form(request):
@@ -53,6 +55,7 @@ def approve_tr_confirmation_form(request):
         return render(request, 'banking/partials/transfer_request_approve.html', context)
     return HttpResponse('No content')
 
+
 @login_required(login_url='login')
 def deny_tr_confirmation_form(request):
     if request.method == 'GET':
@@ -62,15 +65,18 @@ def deny_tr_confirmation_form(request):
         return render(request, 'banking/partials/transfer_request_deny.html', context)
     return HttpResponse('No content')
 
+
 @login_required(login_url='login')
 def withdraw_request(request):
     if request.method == 'GET':
         rid = request.GET.get('rid')
         tr_rq = get_transfer_request_by_id(rid)
         withdraw_transfer_request(rid)
-        return ToastHttpResponse(True,'Request Withdrawn',f'Transfer request of {tr_rq.currency} {tr_rq.amount} was withdrawn successfully')
-        
+        return ToastHttpResponse(True, 'Request Withdrawn',
+                                 f'Transfer request of {tr_rq.currency} {tr_rq.amount} was withdrawn successfully')
+
     return HttpResponse('No content')
+
 
 @login_required(login_url='login')
 def approve_transfer_request(request):
@@ -80,7 +86,8 @@ def approve_transfer_request(request):
             rid = request.GET.get('rid')
             tr_rq = get_transfer_request_by_id(rid)
             atr(rid)
-            return ToastHttpResponse(True,'Money Transferred',f'You have sent {tr_rq.recipient.first_name} an amount of {tr_rq.currency} {tr_rq.amount} successfully')
+            return ToastHttpResponse(True, 'Money Transferred',
+                                     f'You have sent {tr_rq.recipient.first_name} an amount of {tr_rq.currency} {tr_rq.amount} successfully')
         except TransferException as te:
             context = {
                 'message': te.message
@@ -91,6 +98,7 @@ def approve_transfer_request(request):
 
     return HttpResponse('No content')
 
+
 @login_required(login_url='login')
 def deny_transfer_request(request):
     if request.method == 'GET':
@@ -99,22 +107,22 @@ def deny_transfer_request(request):
             rid = request.GET.get('rid')
             tr_rq = get_transfer_request_by_id(rid)
             dtr(rid)
-            return ToastHttpResponse(True,'Transfer Request Declined',f'You have declined the transfer request from {tr_rq.recipient.first_name} for an amount of {tr_rq.currency} {tr_rq.amount} successfully')
-            
+            return ToastHttpResponse(True, 'Transfer Request Declined',
+                                     f'You have declined the transfer request from {tr_rq.recipient.first_name} for an amount of {tr_rq.currency} {tr_rq.amount} successfully')
+
         except TransferException as te:
             context = {
                 'message': te.message
             }
             return render(request, 'banking/partials/send_failed.html', context)
         except Exception as e:
-            return ToastHttpResponse(False,'Error Occured',f'{str(e)}')
+            return ToastHttpResponse(False, 'Error Occured', f'{str(e)}')
 
     return HttpResponse('No content')
 
 
 @login_required(login_url='login')
 def send(request):
-
     form = SearchForm()
     results = []
     # after confirmation
@@ -158,7 +166,7 @@ def send_detail_form(request):
             recipient_id = request.POST.get('recipient')
             amount = request.POST.get('amount')
             currency = request.POST.get('currency')
-            recipient=get_user_with_id(recipient_id)
+            recipient = get_user_with_id(recipient_id)
             transfer_money_by_id(sender_id, recipient_id, amount, currency)
             return HttpResponse(status=204, headers={
                 'HX-Trigger': json.dumps({
@@ -169,7 +177,7 @@ def send_detail_form(request):
                     }
                 })
             })
-            
+
         except TransferException as te:
             context = {
                 'message': te.message
@@ -200,7 +208,6 @@ def detail_form(request):
 
 @login_required(login_url='login')
 def request(request):
-
     form = SearchForm()
     results = []
     # after confirmation
@@ -270,6 +277,7 @@ def request_detail_form(request):
     }
     return render(request, 'banking/partials/request_detail_form.html', context)
 
+
 @login_required(login_url='login')
 def bank_accounts(request):
-    return render(request,'banking/layout/bank-accounts.html')
+    return render(request, 'banking/layout/bank-accounts.html')

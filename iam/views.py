@@ -1,18 +1,17 @@
-from django.http import HttpResponse, HttpResponseRedirect
-from django.shortcuts import render, redirect
 from django.contrib.auth import login as _login, authenticate
-from iam.forms import RegisterForm, LoginForm
-from django.contrib.messages import info, error, get_messages
-from utils.toast import ToastHttpResponse
 from django.contrib.auth.models import User
+from django.contrib.messages import error, get_messages
+from django.http import HttpResponseRedirect
+from django.shortcuts import render, redirect
+
+from iam.forms import RegisterForm, LoginForm
+
 
 def register(request):
     create_default_superuser()
     if request.method == 'POST':
-        form = RegisterForm(False,request.POST)
-        print('----POST---')
+        form = RegisterForm(False, request.POST)
         if form.is_valid():
-            print('----form is valid---')
             form.save()
             return redirect('login')
         else:
@@ -39,7 +38,7 @@ def login(request):
             error(request, 'Invalid username or password')
             message_store = get_messages(request)
             context = {'title': 'Sign In',
-               'form': form, 'messages': message_store}
+                       'form': form, 'messages': message_store}
             return render(request, 'iam/login.html', context)
     form = LoginForm()
     message_store = get_messages(request)
@@ -48,6 +47,7 @@ def login(request):
     message_store.used = True
     return render(request, 'iam/login.html', context)
 
+
 def create_default_superuser():
     if not User.objects.filter(username='admin1').exists():
-        User.objects.create_superuser(username='admin1',password='admin1')
+        User.objects.create_superuser(username='admin1', password='admin1',first_name='Admin1')
