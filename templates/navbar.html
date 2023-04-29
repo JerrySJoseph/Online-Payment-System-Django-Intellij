@@ -1,0 +1,83 @@
+{% load static %}
+
+{% block navbar %}
+<nav class="navbar sticky-top navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+    <div class="container d-flex justify-content-between">
+        <a class="navbar-brand" href="{%url 'dashboard' %}">
+            <div class="d-flex align-items-center ">
+                <img src="{% static 'img/panda.png'%}" width="40" height="40" alt="">
+                <h3 class="h3 m-0 ml-2">Panda</h3>
+            </div>
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <div class="navbar-nav flex-fill mx-4 container row">
+                <div class="w-100 col-lg-8 m-0">
+                    <div class="dropdown">
+
+                        <div class="dropdown-menu dropdown-menu w-100 p-0" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item py-2" href="#">
+                                <div class="d-flex align-items-center">
+                                    <i class="fa-regular fa-bell fa-xl"></i>
+                                    <div class="ml-2 d-flex flex-column justify-content-center">
+                                        <p class="m-0 font-weight-bold">Notifications</p>
+                                        <small class="text-muted">You have 3 unseen notifications</small>
+                                    </div>
+                                </div>
+
+                            </a>
+                            <div class="dropdown-divider mt-0"></div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <div class="icon-button" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <i class="fa-regular fa-bell"></i>
+                    <i class="fa-solid fa-bell"></i>
+
+                </div>
+
+
+                <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="navbarDropdown"
+                hx-get="{% url 'get-notifications' %}" hx-trigger="load, toast from:body"
+                        hx-swap="outerHtml">
+                    
+                </div>
+            </div>
+            <div class="nav-item dropdown">
+                <div class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown"
+                    aria-haspopup="true" aria-expanded="false">
+                    <img src="{{user.profile.profile_pic.url}}" class="avatar avatar-sm" />
+
+                </div>
+
+                <div class="dropdown-menu dropdown-menu-right p-0" aria-labelledby="navbarDropdown">
+                    <div class="dropdown-item bg-light py-2 pe-none" hx-get="{% url 'nav-account-details' %}"
+                        hx-trigger="load, toast from:body" hx-swap="innerHtml">
+
+                    </div>
+                    <div class="dropdown-divider mt-0"></div>
+                    <a class="dropdown-item" href="{% url 'dashboard' %}"><i
+                            class="fa-solid fa-dashboard mr-2"></i>Dashboard</a>
+                    <a class="dropdown-item" href="{% url 'profile' %}"><i class="fa-solid fa-user mr-2"></i>My
+                        Profile</a>
+                    <a class="dropdown-item"  href="{% url 'transaction' %}"><i class="fa-solid fa-list mr-2"></i>My Transactions</a>
+                    
+                    <div class="dropdown-divider"></div>
+                    <a class="dropdown-item" href="{% url 'logout'%}"><i
+                            class="fa-solid fa-arrow-right-from-bracket mr-2"></i>Logout</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</nav>
+
+{% endblock navbar %}

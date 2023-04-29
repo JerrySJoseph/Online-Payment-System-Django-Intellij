@@ -1,0 +1,5 @@
+django
+crispy_bootstrap4
+Pillow
+django_filter
+djangorestframework

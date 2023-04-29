@@ -1,0 +1,42 @@
+{% if request.user.id == transfer_request.sender.id %}
+<div class="card p-4 h-100">
+    <div class="d-flex align-items-center">
+        <div class="mr-2">
+            <img src="{{transfer_request.recipient.profile.profile_pic.url}}" class="avatar avatar-lg" />
+        </div>
+        <div class="">
+            <h5 class="text-bold m-0 p-0">To: {{transfer_request.recipient.first_name}}
+                {{transfer_request.recipient.last_name}}</h5>
+            <p class="m-0 p-0 mb-2">You have requested {{transfer_request.recipient.first_name}}
+                {{transfer_request.recipient.last_name}} an amount of {{transfer_request.currency}}
+                {{transfer_request.amount}}</p>
+            <p><i class="fa-solid fa-clock p-0 m-0 mr-2"></i>{{transfer_request.datetime}} </p>
+            <button class="btn btn-outline-danger btn-sm" hx-get="{% url 'withdraw-form' %}?rid={{transfer_request.id}}"
+                hx-trigger="click" hx-target="#dialog"><i class="fa-solid fa-trash mr-2 fa-sm"></i>Withdraw
+                request</button>
+        </div>
+    </div>
+</div>
+{% else %}
+<div class="card p-4 h-100">
+    <div class="d-flex align-items-center">
+        <div class="mr-2">
+            <img src="{{transfer_request.sender.profile.profile_pic.url}}" class="avatar avatar-lg" />
+        </div>
+        <div class="">
+            <h5 class="text-bold m-0 p-0">From: {{transfer_request.sender.first_name}}
+                {{transfer_request.sender.last_name}}
+            </h5>
+            <p class="m-0 p-0 mb-2">{{transfer_request.recipient.first_name}} {{transfer_request.recipient.last_name}}
+                has requested an amount of {{transfer_request.currency}} {{transfer_request.amount}}</p>
+            <p><i class="fa-solid fa-clock p-0 m-0 mr-2"></i>{{transfer_request.datetime}} </p><button
+                class="btn btn-outline-success btn-sm"
+                hx-get="{% url 'transfer-request-approve-confirmation'%}?rid={{transfer_request.id}}"
+                hx-target="#dialog"><i class="fa-solid fa-check mr-2 fa-sm"></i>Approve</button>
+            <button class="btn btn-outline-warning btn-sm"
+                hx-get="{% url 'transfer-request-deny-confirmation'%}?rid={{transfer_request.id}}"
+                hx-target="#dialog"><i class="fa-solid fa-close mr-2 fa-sm"></i>Deny</button>
+        </div>
+    </div>
+</div>
+{% endif %}

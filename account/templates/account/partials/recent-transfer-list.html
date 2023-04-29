@@ -1,0 +1,7 @@
+<div class="row mt-4">
+    {% for trans in transfers %}
+    <div class="col-lg-4">
+        {% include './recent-transfer-item.html' with recipient=trans %}
+    </div>
+    {% endfor %}
+</div>

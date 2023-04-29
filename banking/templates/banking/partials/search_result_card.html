@@ -1,0 +1,50 @@
+{% load static %}
+
+<div class="card h-100">
+    <div class="card-header text-center">
+        <img src="{{recipient.profile.profile_pic.url}}" class="avatar avatar-lg" />
+    </div>
+    <div class="card-body m-0 text-center">
+        <h3 class="h4 text-truncate m-0">{{recipient.first_name}} {{recipient.last_name}}</h3>
+        <p class="text-muted text-truncate m-0">{{recipient.email}}</p>
+        <small class="text-muted">@{{recipient.username}}</small>
+    </div>
+    {% if type == 'send' %}
+    <div class="card-footer mt-auto">
+        <button class="btn btn-primary w-100"
+        hx-get="{% url 'detail-form' %}?recipient={{recipient.id}}&type={{type}}"
+        hx-trigger="click"
+        hx-target="#dialog">
+            <i class="fa-regular fa-paper-plane mr-2"></i>
+            Send Money
+        </button>
+    </div>
+    {% elif type == 'request' %}
+        <div class="card-footer mt-auto">
+            <button class="btn btn-primary w-100"
+                    hx-get="{% url 'request-detail-form' %}?recipient={{recipient.id}}&type={{type}}"
+                    hx-trigger="click"
+                    hx-target="#dialog">
+                <i class="fa-regular fa-paper-plane mr-2"></i>
+                Request Money
+            </button>
+        </div>
+    {% elif type == 'edit' %}
+    <div class="card-footer mt-auto">
+        <button class="btn btn-primary w-100 mb-2"
+        hx-get="{% url 'detail-form' %}?recipient={{recipient.id}}&type={{type}}"
+        hx-trigger="click"
+        hx-target="#dialog">
+            <i class="fa-regular fa-paper-plane mr-2"></i>
+            Send Money
+        </button>
+        <button class="btn btn-warning w-100"
+        hx-get="{% url 'detail-form' %}?recipient={{recipient.id}}&type={{type}}"
+        hx-trigger="click"
+        hx-target="#dialog">
+            <i class="fa-solid fa-pencil mr-2"></i>
+            Edit User
+        </button>
+    </div>
+    {% endif %}
+</div>

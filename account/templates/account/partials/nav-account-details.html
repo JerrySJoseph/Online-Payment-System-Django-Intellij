@@ -1,0 +1,8 @@
+<div class="d-flex align-items-center">
+    <img src="{{user.profile.profile_pic.url}}" class="avatar avatar-md" />
+
+    <div class="ml-2 d-flex flex-column justify-content-center">
+        <p class="m-0 font-weight-bold">{{user.first_name}} {{user.last_name}}</p>
+        <small class="text-muted"><i class="fa-solid fa-wallet mr-2"></i>{{user.wallet.balance}} {{user.wallet.currency}}</small>
+    </div>
+</div>

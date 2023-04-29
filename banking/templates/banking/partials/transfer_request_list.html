@@ -1,0 +1,12 @@
+<div>
+    <h2 class="h5 m-0 text-capitalize">{{group}} Requests ({{count}})</h2>
+    <small class="text-muted">A list of all your {{group}} transfer requests</small>
+    <div class="dropdown-divider"></div>
+</div>
+<div class="row">
+    {% for tr in transfer_requests %}
+    <div class="col-lg-6 p-2">
+        {% include '../partials/transfer_request_list_item.html' with transfer_request=tr %}
+    </div>
+    {% endfor %}
+</div>

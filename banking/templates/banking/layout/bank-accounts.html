@@ -1,0 +1,33 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="p-4 col-lg-12">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <div class="rounded-circle p-2 shadow-sm bg-success mr-2">
+                    <div><i class="fa-solid fa-building-columns fa-xl text-light"></i></div>
+                </div>
+                <div>
+                    <h2 class="h3 m-0">Bank Accounts</h2>
+                    <small class="text-muted">Request money transfer to your friends or family</small>
+                </div>
+            </div>
+            <a class="text-success cursor-pointer" hx-get="{% url 'add-bank-account'%}" hx-target="#dialog"
+                hx-trigger="click">
+                <i class="fa-solid fa-plus"></i>
+                Link new Bank Account
+            </a>
+        </div>
+        <div class="dropdown-divider m-0 mt-2 mb-4"></div>
+        <div hx-get="{% url 'get-bank-account-list'%}?user_id={{request.user.id}}" hx-trigger="load, toast from:body">
+        </div>
+
+    </div>
+
+ 
+</div>
+
+
+{% endblock %}

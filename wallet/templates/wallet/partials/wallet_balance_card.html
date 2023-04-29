@@ -1,0 +1,21 @@
+<div class="card m-0">
+    <div class="card-body d-flex align-items-center">
+        <div class="rounded-circle p-3 shadow-sm bg-success mr-2">
+            <i class="fa-solid fa-wallet fa-xl text-light"></i>
+        </div>
+        <div class="d-flex flex-column">
+            <h2 class="h4 m-0">{{request.user.wallet.balance}} {{request.user.wallet.currency}}</h2>
+            <p class="text-muted m-0">Wallet Balance</p>
+        </div>
+    </div>
+    <div class="card-footer">
+        <a class="text-success cursor-pointer"
+        hx-get="{% url 'add-money' %}"
+        hx-trigger="click"
+        hx-target="#dialog">
+            <i class="fa-solid fa-plus "></i>
+            Add Money to wallet
+        </a><br>
+        
+    </div>
+</div>

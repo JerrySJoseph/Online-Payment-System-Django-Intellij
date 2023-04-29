@@ -1,0 +1,29 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-12 p-0">
+        <div class="d-flex align-items-center justify-content-between">
+            <div class="d-flex align-items-center">
+                <i class="fa-solid fa-paper-plane fa-xl text-success mr-4"></i>
+                <div>
+                    <h2 class="h3 m-0">All Users</h2>
+                    <small class="text-muted">Instant money transfer to your friends or family</small>
+                </div>
+            </div>
+
+            <button class="btn btn-sm btn-success px-2 py-1" type="button" hx-get="{% url 'add-admin' %}" hx-target="#dialog" hx-trigger="click"><i class="fa-solid fa-plus mr-1"></i> Create new Admin</button>
+        </div>
+        <div class="dropdown-divider"></div>
+
+    </div>
+    <div class="col-lg-12 m-0 p-0" hx-get="{% url 'get-all-users'%}?limit=10&type=all" hx-trigger="load">
+
+
+
+    </div>
+</div>
+
+
+{% endblock %}

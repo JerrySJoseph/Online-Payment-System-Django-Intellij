@@ -1,0 +1,12 @@
+{% if users %}
+
+<div class="row m-0 mt-4">
+
+    {% for user in users %}
+    <div class="col-lg-3 mb-4">
+        {% include 'administrator/partials/user_list_item.html' with user=user %}
+    </div>
+    {% endfor %}
+
+</div>
+{% endif %}

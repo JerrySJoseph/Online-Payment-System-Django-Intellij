@@ -1,0 +1,52 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="card p-4 col-lg-12">
+        <div class="d-flex align-items-center">
+            <div class="rounded-circle p-2 shadow-sm bg-success mr-2">
+                <div><i class="fa-solid fa-paper-plane fa-xl text-light"></i></div>
+            </div>
+            <div>
+                <h2 class="h3 m-0">Request Money</h2>
+                <small class="text-muted">Request money transfer to your friends or family</small>
+            </div>
+        </div>
+
+    </div>
+    <div class="card p-4 col-lg-8 mt-4">
+        <form method="get">
+            {% csrf_token %}
+            <div class="invisible">
+                {{ form.tag|as_crispy_field }}
+            </div>
+            <div class="form-group">
+                {{ form.identifier|as_crispy_field }}
+            </div>
+            <button class="btn btn-info w-100" type="submit"><i
+                    class="fa-solid fa-magnifying-glass text-light mr-2"></i>Search</button>
+        </form>
+        <div class="col-lg-12 m-0 mt-4 p-0">
+
+            {% if search_results %}
+            <h2 class="h4 m-0">Search Results ({{search_results|length}})</h2>
+            <small class="text-muted">We've found {{search_results|length}} result similar to your search</small>
+
+            <div class="row m-0 mt-4  w-100">
+                {% for rec in search_results %}
+                <div class="col-lg-4 p-1 pl-0">
+                    {% include 'banking/partials/search_result_card.html' with recipient=rec type='request' %}
+                </div>
+
+                {% endfor %}
+            </div>
+            {% endif %}
+
+        </div>
+
+    </div>
+</div>
+
+
+{% endblock %}

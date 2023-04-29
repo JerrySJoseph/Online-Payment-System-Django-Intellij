@@ -1,0 +1,18 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<form hx-post="{% url 'delete-bank-account'%}">
+    {% csrf_token %}
+    <div class="text-center">
+        <img src="{% static 'img/warning.png' %}" class="avatar avatar-lg" />
+        <h3 class="h5 mt-4">Remove Bank Account?</h3>
+        <p class="text-muted">Are you sure you want to remove {{account.bank_name}} from your account?
+        </p>
+    </div>
+    <input type="hidden" name="id" value="{{account.id}}">
+    <button class="btn btn-outline-danger w-100 mt-2" id="cancel_send_btn" type="submit">
+        <i class="fa fa-trash mr-2"></i>Yes, Remove this account
+    </button>
+    <button class="btn btn-outline-warning w-100 mt-2" id="cancel_send_btn" data-dismiss="modal">
+        <i class="fa fa-close mr-2"></i>Close
+    </button>
+</form>

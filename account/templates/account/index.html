@@ -1,0 +1,56 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="col-lg-3 p-0 mt-4" hx-get="{% url 'profile-card' %}" hx-trigger="load, toast from:body">
+    </div>
+    <div class="col-lg-8 mt-4 ">
+        <div class="row">
+            <div class="col-lg-6" hx-get="{% url 'wallet-balance-card' %}" hx-trigger="load, toast from:body">
+               
+            </div>
+            <div class="col-lg-6" hx-get="{% url 'currency-card' %}" hx-trigger="load, toast from:body">
+               
+            </div>
+            
+        </div>
+        <div class=" mt-4 ">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                   
+                    <i class="fa-solid fa-right-left fa-xl text-success mr-2"></i>
+                    <h2 class="h3 m-0 text-success">Recent Transfers</h2>
+                </div>
+            
+            </div>
+            <div class="dropdown-divider m-0 mt-2"></div>
+            <div
+            hx-get="{% url 'recent-transfer-list'%}?user_id={{request.user.id}}" hx-trigger="load, toast from:body"
+            ></div>
+
+        </div>
+        <div class=" mt-4 ">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <i class="fa-solid fa-building-columns fa-2xl text-success mr-2"></i>
+                    <h2 class="h3 m-0 text-success">Bank Accounts</h2>
+                </div>
+                <a class="text-success cursor-pointer" hx-get="{% url 'add-bank-account'%}" hx-target="#dialog" hx-trigger="click">
+                    <i class="fa-solid fa-plus"></i>
+                    Link new Bank Account
+                </a>
+            </div>
+            <div class="dropdown-divider m-0 mt-2 mb-4"></div>
+            <div
+            hx-get="{% url 'get-bank-account-list'%}?user_id={{request.user.id}}" hx-trigger="load, toast from:body"
+            ></div>
+
+        </div>
+        <div class="my-4">
+           
+        </div>
+    </div>
+
+</div>
+{% endblock %}

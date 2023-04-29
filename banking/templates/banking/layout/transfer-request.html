@@ -1,0 +1,56 @@
+{% extends 'dashboard_base.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="row">
+    <div class="card col-lg-12 p-3">
+        <div class="d-flex align-items-center">
+            <div class="rounded-circle p-2 shadow-sm bg-success mr-2">
+                <div><i class="fa-solid fa-list fa-xl text-light"></i></div>
+            </div>
+            <div>
+                <h2 class="h3 m-0">Transfer Requests</h2>
+                <small class="text-muted">A list of all your transfer requests</small>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="col-lg-12 p-0 mt-4">
+
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button"
+                    role="tab" aria-controls="home" aria-selected="true">All</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button"
+                    role="tab" aria-controls="profile" aria-selected="false">Sent</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button"
+                    role="tab" aria-controls="contact" aria-selected="false">Recieved</button>
+            </li>
+        </ul>
+        <div class="tab-content" id="myTabContent">
+            <div class="tab-pane fade show active border rounded-bottom p-4" id="home" role="tabpanel"
+                aria-labelledby="home-tab" hx-get="{% url 'transfer-request-list' %}?group=all" hx-swap="innerHtml"
+                hx-trigger="load, toast from:body">
+
+
+            </div>
+            <div class="tab-pane fade border rounded-bottom p-4" id="profile" role="tabpanel" aria-labelledby="profile-tab"
+                hx-get="{% url 'transfer-request-list' %}?group=sent" hx-swap="innerHtml" hx-trigger="load, toast from:body">
+
+            </div>
+            <div class="tab-pane fade border rounded-bottom p-4" id="contact" role="tabpanel" aria-labelledby="contact-tab"
+                hx-get="{% url 'transfer-request-list' %}?group=recieved" hx-swap="innerHtml" hx-trigger="load, toast from:body">
+
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+{% endblock %}

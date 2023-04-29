@@ -1,0 +1,12 @@
+<a class="dropdown-item my-0"
+    href="{% if notification.type == 'MONREQ' %}{% url 'transfer-request' %}{% else %} #{% endif %}">
+    <div class="d-flex align-items-center">
+        <i class="fa-regular fa-bell fa-xl mr-3"></i>
+        <div>
+            <strong>{{notification.title}}</strong><br>
+            <small class="text-muted">{{notification.message}}</small>
+        </div>
+    </div>
+
+
+</a>

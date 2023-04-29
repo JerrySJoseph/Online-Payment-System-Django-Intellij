@@ -1,0 +1,61 @@
+{% load static %}
+{% load crispy_forms_tags %}
+<div>
+    <table class="table table-borderless">
+
+        <tbody>
+            <tr>
+                <th scope="row">Transaction ID</th>
+                <td>:</td>
+                <td>{{t.tid}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Transaction Type</th>
+                <td>:</td>
+                <td>{% if t.type == 'DEBIT' %}
+                    <i class="fa-solid fa-caret-down text-danger mr-2"></i>
+                    {% else %}
+                    <i class="fa-solid fa-caret-up text-success mr-2"></i>
+                    {% endif %}
+                    {{t.type}}
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">Amount</th>
+                <td>:</td>
+                <td>{{t.amount}} {{t.currency}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Sender</th>
+                <td>:</td>
+                <td>{{t.sender.first_name}} {{t.sender.last_name}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Recipient</th>
+                <td>:</td>
+                <td>{{t.recipient.first_name}} {{t.recipient.last_name}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Balance</th>
+                <td>:</td>
+                <td>{{t.balance}} {{request.user.wallet.currency}}</td>
+            </tr>
+            <tr>
+                <th scope="row">Status</th>
+                <td>:</td>
+                <td>{{t.status}}</td>
+            </tr>
+            
+            <tr>
+                <th scope="row">Time</th>
+                <td>:</td>
+                <td>{{t.datetime}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <button class="btn btn-outline-warning w-100 mt-2" id="cancel_send_btn" data-dismiss="modal">
+        <i class="fa-solid fa-close mr-2"></i> Close
+    </button>
+</div>

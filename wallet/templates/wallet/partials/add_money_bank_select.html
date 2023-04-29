@@ -1,0 +1,23 @@
+{% load static %}
+{% load crispy_forms_tags %}
+
+<div>
+    <h5 class="m-0 p-0 mb-4">Select Bank Account</h5>
+    {% for account in accounts %}
+    <div class="card mt-2 hoverable" hx-get="{% url 'add-money' %}?id={{account.id}}" hx-trigger="click"
+        hx-target="#dialog">
+        <div class="card-body">
+            <div class="d-flex align-items-center">
+                <div class="rounded-circle p-3 shadow-sm bg-success mr-2">
+                    <i class="fa-solid fa-building-columns fa-xl text-light"></i>
+                </div>
+
+                <div class="">
+                    <h5 class="m-0 p-0">{{account.bank_name}}</h5>
+                    <p class="text-muted m-0 p-0">Acc No: {{account.acc_no}}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+</div>
